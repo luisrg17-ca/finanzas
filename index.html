@@ -181,7 +181,50 @@
       </div>
 
     </section>
+<!-- MONTHLY BUDGET -->
+<section class="card budget-card">
 
+  <div class="section-header">
+    <div>
+      <p class="section-small">Spending Plan</p>
+      <h2>Monthly Budget</h2>
+    </div>
+
+    <button id="editBudgetBtn" class="text-btn">
+      Edit
+    </button>
+  </div>
+
+  <div class="budget-top">
+    <div>
+      <span class="budget-label">Budget</span>
+      <strong id="budgetAmount">$0.00</strong>
+    </div>
+
+    <div class="budget-remaining">
+      <span class="budget-label">Remaining</span>
+      <strong id="budgetRemaining">$0.00</strong>
+    </div>
+  </div>
+
+  <div class="budget-progress">
+    <div
+      id="budgetProgressBar"
+      class="budget-progress-bar">
+    </div>
+  </div>
+
+  <div class="budget-footer">
+    <span id="budgetSpentText">
+      $0.00 spent
+    </span>
+
+    <span id="budgetPercent">
+      0%
+    </span>
+  </div>
+
+</section>
 
     <!-- TRANSACTION HISTORY -->
     <section class="card">
@@ -284,7 +327,39 @@
 
       <div id="categoryList" class="category-list">
       </div>
+<div class="budget-settings">
 
+  <h3>Monthly Budget</h3>
+
+  <p>
+    Set your monthly spending limit.
+  </p>
+
+  <div class="budget-input-row">
+
+    <div class="budget-input-wrapper">
+      <span>$</span>
+
+      <input
+        type="number"
+        id="monthlyBudgetInput"
+        placeholder="1500"
+        min="0"
+        step="0.01"
+        inputmode="decimal"
+      />
+    </div>
+
+    <button
+      id="saveBudgetBtn"
+      type="button"
+      class="secondary-btn">
+      Save
+    </button>
+
+  </div>
+
+</div>
 
       <div class="backup-section">
 
