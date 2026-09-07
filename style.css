@@ -645,3 +645,122 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* ================================
+   MONTHLY BUDGET
+================================ */
+
+.budget-card {
+  overflow: hidden;
+}
+
+.budget-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.budget-top > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.budget-remaining {
+  text-align: right;
+}
+
+.budget-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+#budgetAmount,
+#budgetRemaining {
+  font-size: 18px;
+  font-weight: 750;
+}
+
+.budget-progress {
+  width: 100%;
+  height: 10px;
+  background: #eeeeef;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.budget-progress-bar {
+  width: 0%;
+  height: 100%;
+  background: #1d1d1f;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.budget-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* ================================
+   BUDGET SETTINGS
+================================ */
+
+.budget-settings {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.budget-settings h3 {
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.budget-settings p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+  margin-bottom: 12px;
+}
+
+.budget-input-row {
+  display: grid;
+  grid-template-columns: 1fr 90px;
+  gap: 8px;
+}
+
+.budget-input-wrapper {
+  display: flex;
+  align-items: center;
+  min-height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.budget-input-wrapper span {
+  padding-left: 13px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.budget-input-wrapper input {
+  border: none;
+  background: transparent;
+  min-height: 40px;
+  padding-left: 6px;
+}
+
+.budget-input-wrapper input:focus {
+  border: none;
+  background: transparent;
+}
