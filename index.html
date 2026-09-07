@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#f5f5f7" />
+
+  <title>My Money</title>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+  <header class="topbar">
+    <div>
+      <p class="welcome">Personal Finance</p>
+      <h1>My Money</h1>
+    </div>
+
+    <button id="settingsBtn" class="icon-btn" aria-label="Settings">
+      ⚙️
+    </button>
+  </header>
+
+
+  <main class="container">
+
+    <!-- BALANCE CARD -->
+    <section class="balance-card">
+      <p class="balance-label">Current Balance</p>
+
+      <h2 id="balanceAmount">$0.00</h2>
+
+      <div class="summary-grid">
+
+        <div class="summary-item income-summary">
+          <span class="summary-icon">↑</span>
+
+          <div>
+            <p>Income</p>
+            <strong id="incomeAmount">$0.00</strong>
+          </div>
+        </div>
+
+        <div class="summary-item expense-summary">
+          <span class="summary-icon">↓</span>
+
+          <div>
+            <p>Expenses</p>
+            <strong id="expenseAmount">$0.00</strong>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- QUICK ADD -->
+    <section class="card">
+
+      <div class="section-header">
+        <div>
+          <p class="section-small">New transaction</p>
+          <h2>Quick Add</h2>
+        </div>
+      </div>
+
+
+      <!-- TYPE -->
+      <div class="type-switch">
+
+        <button
+          class="type-btn active"
+          data-type="expense"
+          id="expenseTypeBtn">
+          Expense
+        </button>
+
+        <button
+          class="type-btn"
+          data-type="income"
+          id="incomeTypeBtn">
+          Income
+        </button>
+
+      </div>
+
+
+      <form id="transactionForm">
+
+        <!-- AMOUNT -->
+        <div class="amount-input-wrapper">
+          <span>$</span>
+
+          <input
+            type="number"
+            id="amount"
+            placeholder="0.00"
+            inputmode="decimal"
+            step="0.01"
+            min="0"
+            required
+          />
+        </div>
+
+
+        <!-- CATEGORY -->
+        <div class="form-group">
+          <label for="category">Category</label>
+
+          <select id="category" required>
+          </select>
+        </div>
+
+
+        <!-- DESCRIPTION -->
+        <div class="form-group">
+          <label for="description">Description</label>
+
+          <input
+            type="text"
+            id="description"
+            placeholder="What was this for?"
+            maxlength="60"
+          />
+        </div>
+
+
+        <!-- DATE -->
+        <div class="form-group">
+          <label for="date">Date</label>
+
+          <input
+            type="date"
+            id="date"
+            required
+          />
+        </div>
+
+
+        <button type="submit" class="primary-btn">
+          + Add Transaction
+        </button>
+
+      </form>
+
+    </section>
+
+
+    <!-- MONTH SUMMARY -->
+    <section class="card">
+
+      <div class="section-header">
+        <div>
+          <p class="section-small">Overview</p>
+          <h2>This Month</h2>
+        </div>
+
+        <span id="monthLabel"></span>
+      </div>
+
+
+      <div class="month-stats">
+
+        <div>
+          <span>Income</span>
+          <strong id="monthIncome">$0.00</strong>
+        </div>
+
+        <div>
+          <span>Expenses</span>
+          <strong id="monthExpenses">$0.00</strong>
+        </div>
+
+        <div>
+          <span>Balance</span>
+          <strong id="monthBalance">$0.00</strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- TRANSACTION HISTORY -->
+    <section class="card">
+
+      <div class="section-header">
+        <div>
+          <p class="section-small">Activity</p>
+          <h2>Recent Transactions</h2>
+        </div>
+
+        <button id="clearTransactionsBtn" class="text-btn">
+          Clear
+        </button>
+
+      </div>
+
+      <div id="transactionList" class="transaction-list">
+
+        <div class="empty-state">
+          <div class="empty-icon">💳</div>
+
+          <h3>No transactions yet</h3>
+
+          <p>
+            Add your first income or expense above.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- CATEGORY MODAL -->
+  <div id="categoryModal" class="modal hidden">
+
+    <div class="modal-overlay" id="modalOverlay"></div>
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div>
+          <p class="section-small">Customize</p>
+          <h2>Manage Categories</h2>
+        </div>
+
+        <button id="closeModalBtn" class="close-btn">
+          ×
+        </button>
+      </div>
+
+
+      <div class="category-type-selector">
+
+        <button
+          class="category-tab active"
+          data-category-type="expense">
+          Expenses
+        </button>
+
+        <button
+          class="category-tab"
+          data-category-type="income">
+          Income
+        </button>
+
+      </div>
+
+
+      <form id="categoryForm">
+
+        <div class="category-form-row">
+
+          <input
+            type="text"
+            id="categoryEmoji"
+            placeholder="🍔"
+            maxlength="4"
+            class="emoji-input"
+          />
+
+          <input
+            type="text"
+            id="categoryName"
+            placeholder="Category name"
+            maxlength="30"
+            required
+          />
+
+          <button type="submit" class="add-category-btn">
+            +
+          </button>
+
+        </div>
+
+      </form>
+
+
+      <div id="categoryList" class="category-list">
+      </div>
+
+
+      <div class="backup-section">
+
+        <h3>Backup</h3>
+
+        <p>
+          Export your data so you have a copy outside this device.
+        </p>
+
+        <div class="backup-buttons">
+
+          <button id="exportBtn" class="secondary-btn">
+            Export Backup
+          </button>
+
+          <label class="secondary-btn upload-btn">
+            Import Backup
+
+            <input
+              type="file"
+              id="importInput"
+              accept=".json"
+              hidden
+            />
+          </label>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
