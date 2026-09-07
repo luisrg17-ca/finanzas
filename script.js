@@ -33,9 +33,9 @@ let selectedCategoryType = "expense";
 let editingTransactionId = null;
 
 
-/* ================================
+/* ========================================
    ELEMENTS
-================================ */
+======================================== */
 
 const transactionForm = document.getElementById("transactionForm");
 
@@ -77,6 +77,7 @@ const importInput = document.getElementById("importInput");
 const submitTransactionBtn =
   transactionForm.querySelector(".primary-btn");
 
+
 /* BUDGET */
 
 const budgetAmount = document.getElementById("budgetAmount");
@@ -90,9 +91,17 @@ const monthlyBudgetInput = document.getElementById("monthlyBudgetInput");
 const saveBudgetBtn = document.getElementById("saveBudgetBtn");
 
 
-/* ================================
+/* FILTERS */
+
+const transactionSearch = document.getElementById("transactionSearch");
+const typeFilter = document.getElementById("typeFilter");
+const monthFilter = document.getElementById("monthFilter");
+const clearFiltersBtn = document.getElementById("clearFiltersBtn");
+
+
+/* ========================================
    INITIALIZE
-================================ */
+======================================== */
 
 init();
 
@@ -107,9 +116,9 @@ function init() {
 }
 
 
-/* ================================
+/* ========================================
    STORAGE
-================================ */
+======================================== */
 
 function loadTransactions() {
   try {
@@ -118,11 +127,7 @@ function loadTransactions() {
 
     return saved ? JSON.parse(saved) : [];
   } catch (error) {
-    console.error(
-      "Could not load transactions:",
-      error
-    );
-
+    console.error("Could not load transactions:", error);
     return [];
   }
 }
@@ -147,10 +152,7 @@ function loadCategories() {
     return JSON.parse(saved);
 
   } catch (error) {
-    console.error(
-      "Could not load categories:",
-      error
-    );
+    console.error("Could not load categories:", error);
 
     return JSON.parse(
       JSON.stringify(defaultCategories)
@@ -167,11 +169,7 @@ function loadBudget() {
     return saved ? Number(saved) : 0;
 
   } catch (error) {
-    console.error(
-      "Could not load budget:",
-      error
-    );
-
+    console.error("Could not load budget:", error);
     return 0;
   }
 }
@@ -201,25 +199,19 @@ function saveBudget() {
 }
 
 
-/* ================================
+/* ========================================
    DATE
-================================ */
+======================================== */
 
 function setTodayDate() {
   if (!dateInput.value) {
-
     const today = new Date();
 
-    const year =
-      today.getFullYear();
-
+    const year = today.getFullYear();
     const month =
-      String(today.getMonth() + 1)
-        .padStart(2, "0");
-
+      String(today.getMonth() + 1).padStart(2, "0");
     const day =
-      String(today.getDate())
-        .padStart(2, "0");
+      String(today.getDate()).padStart(2, "0");
 
     dateInput.value =
       `${year}-${month}-${day}`;
@@ -228,7 +220,6 @@ function setTodayDate() {
 
 
 function updateMonthLabel() {
-
   const now = new Date();
 
   monthLabel.textContent =
@@ -242,9 +233,9 @@ function updateMonthLabel() {
 }
 
 
-/* ================================
+/* ========================================
    TRANSACTION TYPE
-================================ */
+======================================== */
 
 expenseTypeBtn.addEventListener(
   "click",
@@ -263,7 +254,6 @@ incomeTypeBtn.addEventListener(
 
 
 function setTransactionType(type) {
-
   selectedTransactionType = type;
 
   expenseTypeBtn.classList.toggle(
@@ -280,14 +270,11 @@ function setTransactionType(type) {
 }
 
 
-/* ================================
+/* ========================================
    CATEGORY DROPDOWN
-================================ */
+======================================== */
 
-function updateCategoryDropdown(
-  selectedId = null
-) {
-
+function updateCategoryDropdown(selectedId = null) {
   categorySelect.innerHTML = "";
 
   const categoryArray =
@@ -295,7 +282,6 @@ function updateCategoryDropdown(
 
   categoryArray.forEach(
     (category) => {
-
       const option =
         document.createElement("option");
 
@@ -318,7 +304,6 @@ function updateCategoryDropdown(
 
 
   if (categoryArray.length === 0) {
-
     const option =
       document.createElement("option");
 
@@ -332,21 +317,19 @@ function updateCategoryDropdown(
 }
 
 
-/* ================================
+/* ========================================
    ADD / EDIT TRANSACTION
-================================ */
+======================================== */
 
 transactionForm.addEventListener(
   "submit",
   (event) => {
-
     event.preventDefault();
 
     const amount =
       Number(amountInput.value);
 
     if (!amount || amount <= 0) {
-
       alert(
         "Please enter a valid amount."
       );
@@ -356,7 +339,6 @@ transactionForm.addEventListener(
 
 
     if (!categorySelect.value) {
-
       alert(
         "Please select a category."
       );
@@ -366,133 +348,78 @@ transactionForm.addEventListener(
 
 
     if (editingTransactionId) {
-
-      updateExistingTransaction(
-        amount
-      );
-
+      updateExistingTransaction(amount);
     } else {
-
-      createTransaction(
-        amount
-      );
+      createTransaction(amount);
     }
   }
 );
 
 
 function createTransaction(amount) {
-
   const transaction = {
-
     id: createId(),
-
-    type:
-      selectedTransactionType,
-
-    amount:
-      amount,
-
-    categoryId:
-      categorySelect.value,
-
-    description:
-      descriptionInput.value.trim(),
-
-    date:
-      dateInput.value,
-
-    createdAt:
-      Date.now()
+    type: selectedTransactionType,
+    amount,
+    categoryId: categorySelect.value,
+    description: descriptionInput.value.trim(),
+    date: dateInput.value,
+    createdAt: Date.now()
   };
 
-
-  transactions.push(
-    transaction
-  );
-
+  transactions.push(transaction);
 
   saveTransactions();
 
   resetTransactionForm();
-
   renderTransactions();
-
   updateDashboard();
-
   updateBudget();
 }
 
 
 function updateExistingTransaction(amount) {
-
   const transactionIndex =
     transactions.findIndex(
       (transaction) =>
-        transaction.id ===
-        editingTransactionId
+        transaction.id === editingTransactionId
     );
 
-
   if (transactionIndex === -1) {
-
     resetTransactionForm();
-
     return;
   }
 
-
   transactions[transactionIndex] = {
-
-    ...transactions[
-      transactionIndex
-    ],
-
-    type:
-      selectedTransactionType,
-
-    amount:
-      amount,
-
-    categoryId:
-      categorySelect.value,
-
-    description:
-      descriptionInput.value.trim(),
-
-    date:
-      dateInput.value
+    ...transactions[transactionIndex],
+    type: selectedTransactionType,
+    amount,
+    categoryId: categorySelect.value,
+    description: descriptionInput.value.trim(),
+    date: dateInput.value
   };
-
 
   saveTransactions();
 
   resetTransactionForm();
-
   renderTransactions();
-
   updateDashboard();
-
   updateBudget();
 }
 
 
-/* ================================
+/* ========================================
    RESET FORM
-================================ */
+======================================== */
 
 function resetTransactionForm() {
-
   editingTransactionId = null;
 
   transactionForm.reset();
 
-  selectedTransactionType =
-    "expense";
+  selectedTransactionType = "expense";
 
-  setTransactionType(
-    "expense"
-  );
+  setTransactionType("expense");
 
   setTodayDate();
 
@@ -501,17 +428,109 @@ function resetTransactionForm() {
 }
 
 
-/* ================================
+/* ========================================
+   FILTERS
+======================================== */
+
+transactionSearch.addEventListener(
+  "input",
+  renderTransactions
+);
+
+typeFilter.addEventListener(
+  "change",
+  renderTransactions
+);
+
+monthFilter.addEventListener(
+  "change",
+  renderTransactions
+);
+
+
+clearFiltersBtn.addEventListener(
+  "click",
+  () => {
+    transactionSearch.value = "";
+    typeFilter.value = "all";
+    monthFilter.value = "";
+
+    renderTransactions();
+  }
+);
+
+
+function getFilteredTransactions() {
+  const search =
+    transactionSearch.value
+      .trim()
+      .toLowerCase();
+
+  const selectedType =
+    typeFilter.value;
+
+  const selectedMonth =
+    monthFilter.value;
+
+
+  return transactions.filter(
+    (transaction) => {
+      const category =
+        getCategory(
+          transaction.type,
+          transaction.categoryId
+        );
+
+      const description =
+        transaction.description || "";
+
+      const categoryName =
+        category?.name || "";
+
+      const searchText =
+        `${description} ${categoryName}`
+          .toLowerCase();
+
+
+      const matchesSearch =
+        !search ||
+        searchText.includes(search);
+
+
+      const matchesType =
+        selectedType === "all" ||
+        transaction.type === selectedType;
+
+
+      const matchesMonth =
+        !selectedMonth ||
+        transaction.date.startsWith(
+          selectedMonth
+        );
+
+
+      return (
+        matchesSearch &&
+        matchesType &&
+        matchesMonth
+      );
+    }
+  );
+}
+
+
+/* ========================================
    TRANSACTION LIST
-================================ */
+======================================== */
 
 function renderTransactions() {
-
   transactionList.innerHTML = "";
+
+  const filteredTransactions =
+    getFilteredTransactions();
 
 
   if (transactions.length === 0) {
-
     transactionList.innerHTML = `
       <div class="empty-state">
 
@@ -534,17 +553,37 @@ function renderTransactions() {
   }
 
 
+  if (filteredTransactions.length === 0) {
+    transactionList.innerHTML = `
+      <div class="empty-state">
+
+        <div class="empty-icon">
+          🔎
+        </div>
+
+        <h3>
+          No results
+        </h3>
+
+        <p>
+          Try changing your search or filters.
+        </p>
+
+      </div>
+    `;
+
+    return;
+  }
+
+
   const sortedTransactions =
-    [...transactions].sort(
+    [...filteredTransactions].sort(
       (a, b) => {
-
         const dateDifference =
-          new Date(b.date) -
-          new Date(a.date);
+          parseLocalDate(b.date) -
+          parseLocalDate(a.date);
 
-        if (
-          dateDifference !== 0
-        ) {
+        if (dateDifference !== 0) {
           return dateDifference;
         }
 
@@ -558,7 +597,6 @@ function renderTransactions() {
 
   sortedTransactions.forEach(
     (transaction) => {
-
       const category =
         getCategory(
           transaction.type,
@@ -582,7 +620,9 @@ function renderTransactions() {
       item.innerHTML = `
 
         <div class="transaction-icon">
-          ${escapeHTML(category?.emoji || "📌")}
+          ${escapeHTML(
+            category?.emoji || "📌"
+          )}
         </div>
 
         <div class="transaction-info">
@@ -597,26 +637,18 @@ function renderTransactions() {
 
           <p>
             ${escapeHTML(
-              category?.name ||
-              "Category"
+              category?.name || "Category"
             )}
             ·
-            ${formatDate(
-              transaction.date
-            )}
+            ${formatDate(transaction.date)}
           </p>
 
         </div>
 
         <div
-          class="transaction-amount
-          ${transaction.type}"
+          class="transaction-amount ${transaction.type}"
         >
-
-          ${sign}${formatCurrency(
-            transaction.amount
-          )}
-
+          ${sign}${formatCurrency(transaction.amount)}
         </div>
 
         <div class="transaction-actions">
@@ -625,6 +657,7 @@ function renderTransactions() {
             class="small-action-btn edit-transaction"
             data-id="${transaction.id}"
             aria-label="Edit transaction"
+            type="button"
           >
             ✏️
           </button>
@@ -633,6 +666,7 @@ function renderTransactions() {
             class="small-action-btn delete-transaction"
             data-id="${transaction.id}"
             aria-label="Delete transaction"
+            type="button"
           >
             🗑️
           </button>
@@ -640,10 +674,7 @@ function renderTransactions() {
         </div>
       `;
 
-
-      transactionList.appendChild(
-        item
-      );
+      transactionList.appendChild(item);
     }
   );
 
@@ -652,23 +683,21 @@ function renderTransactions() {
 }
 
 
-function attachTransactionActions() {
+/* ========================================
+   TRANSACTION ACTIONS
+======================================== */
 
+function attachTransactionActions() {
   document
-    .querySelectorAll(
-      ".edit-transaction"
-    )
+    .querySelectorAll(".edit-transaction")
     .forEach(
       (button) => {
-
         button.addEventListener(
           "click",
           () => {
-
             editTransaction(
               button.dataset.id
             );
-
           }
         );
       }
@@ -676,20 +705,15 @@ function attachTransactionActions() {
 
 
   document
-    .querySelectorAll(
-      ".delete-transaction"
-    )
+    .querySelectorAll(".delete-transaction")
     .forEach(
       (button) => {
-
         button.addEventListener(
           "click",
           () => {
-
             deleteTransaction(
               button.dataset.id
             );
-
           }
         );
       }
@@ -697,93 +721,74 @@ function attachTransactionActions() {
 }
 
 
-/* ================================
+/* ========================================
    EDIT TRANSACTION
-================================ */
+======================================== */
 
 function editTransaction(id) {
-
   const transaction =
     transactions.find(
       (item) =>
         item.id === id
     );
 
-
   if (!transaction) return;
 
-
-  editingTransactionId =
-    id;
-
+  editingTransactionId = id;
 
   setTransactionType(
     transaction.type
   );
 
-
   amountInput.value =
     transaction.amount;
-
 
   descriptionInput.value =
     transaction.description || "";
 
-
   dateInput.value =
     transaction.date;
-
 
   updateCategoryDropdown(
     transaction.categoryId
   );
 
-
   submitTransactionBtn.textContent =
     "Save Changes";
-
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
 
-
   setTimeout(
     () => {
-
       amountInput.focus();
-
     },
-    400
+    350
   );
 }
 
 
-/* ================================
+/* ========================================
    DELETE TRANSACTION
-================================ */
+======================================== */
 
 function deleteTransaction(id) {
-
   const transaction =
     transactions.find(
       (item) =>
         item.id === id
     );
 
-
   if (!transaction) return;
-
 
   const confirmed =
     confirm(
       "Delete this transaction?"
     );
 
-
   if (!confirmed) return;
-
 
   transactions =
     transactions.filter(
@@ -791,9 +796,7 @@ function deleteTransaction(id) {
         item.id !== id
     );
 
-
   saveTransactions();
-
 
   if (
     editingTransactionId === id
@@ -801,62 +804,48 @@ function deleteTransaction(id) {
     resetTransactionForm();
   }
 
-
   renderTransactions();
-
   updateDashboard();
-
   updateBudget();
 }
 
 
-/* ================================
-   CLEAR TRANSACTIONS
-================================ */
+/* ========================================
+   CLEAR ALL TRANSACTIONS
+======================================== */
 
 clearTransactionsBtn.addEventListener(
   "click",
   () => {
-
-    if (
-      transactions.length === 0
-    ) {
+    if (transactions.length === 0) {
       return;
     }
-
 
     const confirmed =
       confirm(
         "Delete all transactions? This cannot be undone."
       );
 
-
     if (!confirmed) return;
-
 
     transactions = [];
 
-
     saveTransactions();
-
 
     resetTransactionForm();
 
     renderTransactions();
-
     updateDashboard();
-
     updateBudget();
   }
 );
 
 
-/* ================================
+/* ========================================
    DASHBOARD
-================================ */
+======================================== */
 
 function updateDashboard() {
-
   let totalIncome = 0;
   let totalExpenses = 0;
 
@@ -864,8 +853,7 @@ function updateDashboard() {
   let currentMonthExpenses = 0;
 
 
-  const now =
-    new Date();
+  const now = new Date();
 
   const currentYear =
     now.getFullYear();
@@ -876,25 +864,16 @@ function updateDashboard() {
 
   transactions.forEach(
     (transaction) => {
-
       const amount =
-        Number(
-          transaction.amount
-        ) || 0;
+        Number(transaction.amount) || 0;
 
 
       if (
-        transaction.type ===
-        "income"
+        transaction.type === "income"
       ) {
-
-        totalIncome +=
-          amount;
-
+        totalIncome += amount;
       } else {
-
-        totalExpenses +=
-          amount;
+        totalExpenses += amount;
       }
 
 
@@ -905,24 +884,15 @@ function updateDashboard() {
 
 
       if (
-        transactionDate.getFullYear() ===
-          currentYear &&
-        transactionDate.getMonth() ===
-          currentMonth
+        transactionDate.getFullYear() === currentYear &&
+        transactionDate.getMonth() === currentMonth
       ) {
-
         if (
-          transaction.type ===
-          "income"
+          transaction.type === "income"
         ) {
-
-          currentMonthIncome +=
-            amount;
-
+          currentMonthIncome += amount;
         } else {
-
-          currentMonthExpenses +=
-            amount;
+          currentMonthExpenses += amount;
         }
       }
     }
@@ -930,9 +900,7 @@ function updateDashboard() {
 
 
   const totalBalance =
-    totalIncome -
-    totalExpenses;
-
+    totalIncome - totalExpenses;
 
   const monthlyBalance =
     currentMonthIncome -
@@ -944,30 +912,25 @@ function updateDashboard() {
       totalBalance
     );
 
-
   incomeAmount.textContent =
     formatCurrency(
       totalIncome
     );
-
 
   expenseAmount.textContent =
     formatCurrency(
       totalExpenses
     );
 
-
   monthIncome.textContent =
     formatCurrency(
       currentMonthIncome
     );
 
-
   monthExpenses.textContent =
     formatCurrency(
       currentMonthExpenses
     );
-
 
   monthBalance.textContent =
     formatSignedBalance(
@@ -982,14 +945,12 @@ function updateDashboard() {
 }
 
 
-/* ================================
+/* ========================================
    MONTHLY BUDGET
-================================ */
+======================================== */
 
 function updateBudget() {
-
-  const now =
-    new Date();
+  const now = new Date();
 
   const currentYear =
     now.getFullYear();
@@ -997,20 +958,16 @@ function updateBudget() {
   const currentMonth =
     now.getMonth();
 
-
   let currentMonthExpenses = 0;
 
 
   transactions.forEach(
     (transaction) => {
-
       if (
-        transaction.type !==
-        "expense"
+        transaction.type !== "expense"
       ) {
         return;
       }
-
 
       const transactionDate =
         parseLocalDate(
@@ -1019,12 +976,9 @@ function updateBudget() {
 
 
       if (
-        transactionDate.getFullYear() ===
-          currentYear &&
-        transactionDate.getMonth() ===
-          currentMonth
+        transactionDate.getFullYear() === currentYear &&
+        transactionDate.getMonth() === currentMonth
       ) {
-
         currentMonthExpenses +=
           Number(
             transaction.amount
@@ -1049,187 +1003,135 @@ function updateBudget() {
 
 
   const displayPercentage =
-    Math.round(
-      percentage
-    );
-
+    Math.round(percentage);
 
   const progressPercentage =
     Math.min(
-      percentage,
+      Math.max(percentage, 0),
       100
     );
 
 
-  if (budgetAmount) {
-
-    budgetAmount.textContent =
-      formatCurrency(
-        monthlyBudget
-      );
-  }
+  budgetAmount.textContent =
+    formatCurrency(
+      monthlyBudget
+    );
 
 
-  if (budgetRemaining) {
-
-    budgetRemaining.textContent =
-      formatSignedBalance(
-        remaining
-      );
+  budgetRemaining.textContent =
+    formatSignedBalance(
+      remaining
+    );
 
 
+  budgetSpentText.textContent =
+    `${formatCurrency(
+      currentMonthExpenses
+    )} spent`;
+
+
+  budgetPercent.textContent =
+    `${displayPercentage}%`;
+
+
+  budgetProgressBar.style.width =
+    `${progressPercentage}%`;
+
+
+  if (monthlyBudget === 0) {
     budgetRemaining.style.color =
-      remaining < 0
-        ? "var(--expense)"
-        : "var(--income)";
-  }
-
-
-  if (budgetSpentText) {
-
-    budgetSpentText.textContent =
-      `${formatCurrency(
-        currentMonthExpenses
-      )} spent`;
-  }
-
-
-  if (budgetPercent) {
-
-    budgetPercent.textContent =
-      `${displayPercentage}%`;
-  }
-
-
-  if (budgetProgressBar) {
-
-    budgetProgressBar.style.width =
-      `${progressPercentage}%`;
-
+      "var(--text)";
 
     budgetProgressBar.style.background =
-      remaining < 0
-        ? "var(--expense)"
-        : "var(--primary)";
+      "var(--primary)";
+  } else if (remaining < 0) {
+    budgetRemaining.style.color =
+      "var(--expense)";
+
+    budgetProgressBar.style.background =
+      "var(--expense)";
+  } else {
+    budgetRemaining.style.color =
+      "var(--income)";
+
+    budgetProgressBar.style.background =
+      "var(--primary)";
   }
 
 
-  if (monthlyBudgetInput) {
-
-    monthlyBudgetInput.value =
-      monthlyBudget || "";
-  }
+  monthlyBudgetInput.value =
+    monthlyBudget || "";
 }
 
 
-/* ================================
+/* ========================================
    SAVE BUDGET
-================================ */
+======================================== */
 
-if (saveBudgetBtn) {
+saveBudgetBtn.addEventListener(
+  "click",
+  () => {
+    const value =
+      Number(
+        monthlyBudgetInput.value
+      );
 
-  saveBudgetBtn.addEventListener(
-    "click",
-    () => {
-
-      const value =
-        Number(
-          monthlyBudgetInput.value
-        );
-
-
-      if (
-        value < 0 ||
-        Number.isNaN(value)
-      ) {
-
-        alert(
-          "Please enter a valid budget."
-        );
-
-        return;
-      }
-
-
-      monthlyBudget =
-        value;
-
-
-      saveBudget();
-
-      updateBudget();
-
-
+    if (
+      value < 0 ||
+      Number.isNaN(value)
+    ) {
       alert(
-        "Monthly budget saved."
+        "Please enter a valid budget."
       );
+
+      return;
     }
-  );
-}
+
+    monthlyBudget =
+      value;
+
+    saveBudget();
+    updateBudget();
+
+    alert(
+      "Monthly budget saved."
+    );
+  }
+);
 
 
-/* ================================
+/* ========================================
    EDIT BUDGET
-================================ */
+======================================== */
 
-if (editBudgetBtn) {
+editBudgetBtn.addEventListener(
+  "click",
+  () => {
+    openSettings();
 
-  editBudgetBtn.addEventListener(
-    "click",
-    () => {
+    setTimeout(
+      () => {
+        monthlyBudgetInput.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
 
-      categoryModal
-        .classList
-        .remove("hidden");
-
-
-      document.body.style.overflow =
-        "hidden";
-
-
-      setTimeout(
-        () => {
-
-          monthlyBudgetInput
-            .scrollIntoView({
-              behavior:
-                "smooth",
-
-              block:
-                "center"
-            });
+        monthlyBudgetInput.focus();
+      },
+      200
+    );
+  }
+);
 
 
-          monthlyBudgetInput.focus();
-
-        },
-        200
-      );
-    }
-  );
-}
-
-
-/* ================================
+/* ========================================
    SETTINGS MODAL
-================================ */
+======================================== */
 
 settingsBtn.addEventListener(
   "click",
   () => {
-
-    categoryModal
-      .classList
-      .remove("hidden");
-
-
-    document.body.style.overflow =
-      "hidden";
-
-
-    updateCategoryManager();
-
-    updateBudget();
+    openSettings();
   }
 );
 
@@ -1246,44 +1148,49 @@ modalOverlay.addEventListener(
 );
 
 
+function openSettings() {
+  categoryModal.classList.remove(
+    "hidden"
+  );
+
+  document.body.style.overflow =
+    "hidden";
+
+  updateCategoryManager();
+  updateBudget();
+}
+
+
 function closeSettings() {
-
-  categoryModal
-    .classList
-    .add("hidden");
-
+  categoryModal.classList.add(
+    "hidden"
+  );
 
   document.body.style.overflow =
     "";
 }
 
 
-/* ================================
+/* ========================================
    CATEGORY TABS
-================================ */
+======================================== */
 
 categoryTabs.forEach(
   (tab) => {
-
     tab.addEventListener(
       "click",
       () => {
-
         selectedCategoryType =
           tab.dataset.categoryType;
 
-
         categoryTabs.forEach(
           (button) => {
-
             button.classList.toggle(
               "active",
               button === tab
             );
-
           }
         );
-
 
         updateCategoryManager();
       }
@@ -1292,20 +1199,17 @@ categoryTabs.forEach(
 );
 
 
-/* ================================
+/* ========================================
    ADD CATEGORY
-================================ */
+======================================== */
 
 categoryForm.addEventListener(
   "submit",
   (event) => {
-
     event.preventDefault();
-
 
     const name =
       categoryName.value.trim();
-
 
     const emoji =
       categoryEmoji.value.trim() ||
@@ -1327,7 +1231,6 @@ categoryForm.addEventListener(
 
 
     if (duplicate) {
-
       alert(
         "This category already exists."
       );
@@ -1339,39 +1242,29 @@ categoryForm.addEventListener(
     categories[
       selectedCategoryType
     ].push({
-
       id: createId(),
-
       name,
-
       emoji
     });
 
 
     saveCategories();
 
-
     categoryForm.reset();
 
-
     updateCategoryManager();
-
     updateCategoryDropdown();
-
     renderTransactions();
   }
 );
 
 
-/* ================================
+/* ========================================
    CATEGORY MANAGER
-================================ */
+======================================== */
 
 function updateCategoryManager() {
-
-  categoryList.innerHTML =
-    "";
-
+  categoryList.innerHTML = "";
 
   const categoryArray =
     categories[
@@ -1379,15 +1272,14 @@ function updateCategoryManager() {
     ] || [];
 
 
-  if (
-    categoryArray.length === 0
-  ) {
-
+  if (categoryArray.length === 0) {
     categoryList.innerHTML = `
       <div class="empty-state">
+
         <p>
           No categories yet.
         </p>
+
       </div>
     `;
 
@@ -1397,12 +1289,10 @@ function updateCategoryManager() {
 
   categoryArray.forEach(
     (category) => {
-
       const item =
         document.createElement(
           "div"
         );
-
 
       item.className =
         "category-item";
@@ -1412,8 +1302,7 @@ function updateCategoryManager() {
 
         <div class="category-item-emoji">
           ${escapeHTML(
-            category.emoji ||
-            "📌"
+            category.emoji || "📌"
           )}
         </div>
 
@@ -1426,9 +1315,11 @@ function updateCategoryManager() {
         <button
           class="delete-category-btn"
           data-id="${category.id}"
+          type="button"
         >
           Delete
         </button>
+
       `;
 
 
@@ -1445,15 +1336,12 @@ function updateCategoryManager() {
     )
     .forEach(
       (button) => {
-
         button.addEventListener(
           "click",
           () => {
-
             deleteCategory(
               button.dataset.id
             );
-
           }
         );
       }
@@ -1461,12 +1349,11 @@ function updateCategoryManager() {
 }
 
 
-/* ================================
+/* ========================================
    DELETE CATEGORY
-================================ */
+======================================== */
 
 function deleteCategory(id) {
-
   const category =
     categories[
       selectedCategoryType
@@ -1482,10 +1369,8 @@ function deleteCategory(id) {
   const used =
     transactions.some(
       (transaction) =>
-        transaction.type ===
-          selectedCategoryType &&
-        transaction.categoryId ===
-          id
+        transaction.type === selectedCategoryType &&
+        transaction.categoryId === id
     );
 
 
@@ -1494,7 +1379,6 @@ function deleteCategory(id) {
 
 
   if (used) {
-
     message +=
       "\n\nExisting transactions will stay in your history, but this category will no longer be available for new transactions.";
   }
@@ -1520,24 +1404,17 @@ function deleteCategory(id) {
 
   saveCategories();
 
-
   updateCategoryManager();
-
   updateCategoryDropdown();
-
   renderTransactions();
 }
 
 
-/* ================================
+/* ========================================
    GET CATEGORY
-================================ */
+======================================== */
 
-function getCategory(
-  type,
-  id
-) {
-
+function getCategory(type, id) {
   return (
     categories[type]?.find(
       (category) =>
@@ -1547,30 +1424,20 @@ function getCategory(
 }
 
 
-/* ================================
+/* ========================================
    EXPORT BACKUP
-================================ */
+======================================== */
 
 exportBtn.addEventListener(
   "click",
   () => {
-
     const backup = {
-
-      app:
-        "My Money",
-
-      version:
-        2,
-
+      app: "My Money",
+      version: 3,
       exportedAt:
-        new Date()
-          .toISOString(),
-
+        new Date().toISOString(),
       transactions,
-
       categories,
-
       monthlyBudget
     };
 
@@ -1587,8 +1454,7 @@ exportBtn.addEventListener(
       new Blob(
         [data],
         {
-          type:
-            "application/json"
+          type: "application/json"
         }
       );
 
@@ -1639,17 +1505,15 @@ exportBtn.addEventListener(
 );
 
 
-/* ================================
+/* ========================================
    IMPORT BACKUP
-================================ */
+======================================== */
 
 importInput.addEventListener(
   "change",
   (event) => {
-
     const file =
       event.target.files[0];
-
 
     if (!file) return;
 
@@ -1660,9 +1524,7 @@ importInput.addEventListener(
 
     reader.onload =
       (loadEvent) => {
-
         try {
-
           const backup =
             JSON.parse(
               loadEvent.target.result
@@ -1681,7 +1543,6 @@ importInput.addEventListener(
               backup.categories.income
             )
           ) {
-
             throw new Error(
               "Invalid backup"
             );
@@ -1695,10 +1556,7 @@ importInput.addEventListener(
 
 
           if (!confirmed) {
-
-            importInput.value =
-              "";
-
+            importInput.value = "";
             return;
           }
 
@@ -1706,10 +1564,8 @@ importInput.addEventListener(
           transactions =
             backup.transactions;
 
-
           categories =
             backup.categories;
-
 
           monthlyBudget =
             Number(
@@ -1718,22 +1574,25 @@ importInput.addEventListener(
 
 
           saveTransactions();
-
           saveCategories();
-
           saveBudget();
-
 
           resetTransactionForm();
 
+          transactionSearch.value =
+            "";
+
+          typeFilter.value =
+            "all";
+
+          monthFilter.value =
+            "";
+
+
           updateCategoryManager();
-
           updateCategoryDropdown();
-
           renderTransactions();
-
           updateDashboard();
-
           updateBudget();
 
 
@@ -1745,11 +1604,7 @@ importInput.addEventListener(
           closeSettings();
 
         } catch (error) {
-
-          console.error(
-            error
-          );
-
+          console.error(error);
 
           alert(
             "This file is not a valid My Money backup."
@@ -1757,37 +1612,29 @@ importInput.addEventListener(
         }
 
 
-        importInput.value =
-          "";
+        importInput.value = "";
       };
 
 
-    reader.readAsText(
-      file
-    );
+    reader.readAsText(file);
   }
 );
 
 
-/* ================================
+/* ========================================
    HELPERS
-================================ */
+======================================== */
 
 function createId() {
-
   if (
     window.crypto &&
     crypto.randomUUID
   ) {
-
     return crypto.randomUUID();
   }
 
-
   return (
-    Date.now()
-      .toString(36) +
-
+    Date.now().toString(36) +
     Math.random()
       .toString(36)
       .substring(2)
@@ -1796,15 +1643,11 @@ function createId() {
 
 
 function formatCurrency(amount) {
-
   return new Intl.NumberFormat(
     "en-CA",
     {
-      style:
-        "currency",
-
-      currency:
-        "CAD"
+      style: "currency",
+      currency: "CAD"
     }
   ).format(
     Number(amount) || 0
@@ -1813,32 +1656,26 @@ function formatCurrency(amount) {
 
 
 function formatSignedBalance(amount) {
-
   const number =
     Number(amount) || 0;
 
-
   if (number < 0) {
-
     return `-${formatCurrency(
       Math.abs(number)
     )}`;
   }
 
-
-  return formatCurrency(
-    number
-  );
+  return formatCurrency(number);
 }
 
 
-function parseLocalDate(
-  dateString
-) {
+function parseLocalDate(dateString) {
+  if (!dateString) {
+    return new Date();
+  }
 
   const parts =
     dateString.split("-");
-
 
   return new Date(
     Number(parts[0]),
@@ -1848,42 +1685,37 @@ function parseLocalDate(
 }
 
 
-function formatDate(
-  dateString
-) {
-
+function formatDate(dateString) {
   const date =
     parseLocalDate(
       dateString
     );
 
-
   return date.toLocaleDateString(
     "en-CA",
     {
-      month:
-        "short",
-
-      day:
-        "numeric"
+      month: "short",
+      day: "numeric",
+      year:
+        date.getFullYear() !==
+        new Date().getFullYear()
+          ? "numeric"
+          : undefined
     }
   );
 }
 
 
 function escapeHTML(value) {
-
   const div =
     document.createElement(
       "div"
     );
 
-
   div.textContent =
     value == null
       ? ""
       : String(value);
-
 
   return div.innerHTML;
 }
