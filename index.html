@@ -28,31 +28,52 @@
 
     <!-- BALANCE CARD -->
     <section class="balance-card">
-      <p class="balance-label">Current Balance</p>
 
-      <h2 id="balanceAmount">$0.00</h2>
+      <p class="balance-label">
+        Current Balance
+      </p>
+
+      <h2 id="balanceAmount">
+        $0.00
+      </h2>
 
       <div class="summary-grid">
 
         <div class="summary-item income-summary">
-          <span class="summary-icon">↑</span>
+
+          <span class="summary-icon">
+            ↑
+          </span>
 
           <div>
             <p>Income</p>
-            <strong id="incomeAmount">$0.00</strong>
+
+            <strong id="incomeAmount">
+              $0.00
+            </strong>
           </div>
+
         </div>
 
+
         <div class="summary-item expense-summary">
-          <span class="summary-icon">↓</span>
+
+          <span class="summary-icon">
+            ↓
+          </span>
 
           <div>
             <p>Expenses</p>
-            <strong id="expenseAmount">$0.00</strong>
+
+            <strong id="expenseAmount">
+              $0.00
+            </strong>
           </div>
+
         </div>
 
       </div>
+
     </section>
 
 
@@ -60,28 +81,41 @@
     <section class="card">
 
       <div class="section-header">
+
         <div>
-          <p class="section-small">New transaction</p>
-          <h2>Quick Add</h2>
+          <p class="section-small">
+            New transaction
+          </p>
+
+          <h2>
+            Quick Add
+          </h2>
         </div>
+
       </div>
 
 
-      <!-- TYPE -->
       <div class="type-switch">
 
         <button
           class="type-btn active"
           data-type="expense"
-          id="expenseTypeBtn">
+          id="expenseTypeBtn"
+          type="button">
+
           Expense
+
         </button>
+
 
         <button
           class="type-btn"
           data-type="income"
-          id="incomeTypeBtn">
+          id="incomeTypeBtn"
+          type="button">
+
           Income
+
         </button>
 
       </div>
@@ -91,6 +125,7 @@
 
         <!-- AMOUNT -->
         <div class="amount-input-wrapper">
+
           <span>$</span>
 
           <input
@@ -102,21 +137,29 @@
             min="0"
             required
           />
+
         </div>
 
 
         <!-- CATEGORY -->
         <div class="form-group">
-          <label for="category">Category</label>
+
+          <label for="category">
+            Category
+          </label>
 
           <select id="category" required>
           </select>
+
         </div>
 
 
         <!-- DESCRIPTION -->
         <div class="form-group">
-          <label for="description">Description</label>
+
+          <label for="description">
+            Description
+          </label>
 
           <input
             type="text"
@@ -124,23 +167,32 @@
             placeholder="What was this for?"
             maxlength="60"
           />
+
         </div>
 
 
         <!-- DATE -->
         <div class="form-group">
-          <label for="date">Date</label>
+
+          <label for="date">
+            Date
+          </label>
 
           <input
             type="date"
             id="date"
             required
           />
+
         </div>
 
 
-        <button type="submit" class="primary-btn">
+        <button
+          type="submit"
+          class="primary-btn">
+
           + Add Transaction
+
         </button>
 
       </form>
@@ -152,105 +204,250 @@
     <section class="card">
 
       <div class="section-header">
+
         <div>
-          <p class="section-small">Overview</p>
-          <h2>This Month</h2>
+          <p class="section-small">
+            Overview
+          </p>
+
+          <h2>
+            This Month
+          </h2>
         </div>
 
-        <span id="monthLabel"></span>
+        <span id="monthLabel">
+        </span>
+
       </div>
 
 
       <div class="month-stats">
 
         <div>
-          <span>Income</span>
-          <strong id="monthIncome">$0.00</strong>
+
+          <span>
+            Income
+          </span>
+
+          <strong id="monthIncome">
+            $0.00
+          </strong>
+
         </div>
 
-        <div>
-          <span>Expenses</span>
-          <strong id="monthExpenses">$0.00</strong>
-        </div>
 
         <div>
-          <span>Balance</span>
-          <strong id="monthBalance">$0.00</strong>
+
+          <span>
+            Expenses
+          </span>
+
+          <strong id="monthExpenses">
+            $0.00
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>
+            Balance
+          </span>
+
+          <strong id="monthBalance">
+            $0.00
+          </strong>
+
         </div>
 
       </div>
 
     </section>
-<!-- MONTHLY BUDGET -->
-<section class="card budget-card">
 
-  <div class="section-header">
-    <div>
-      <p class="section-small">Spending Plan</p>
-      <h2>Monthly Budget</h2>
-    </div>
 
-    <button id="editBudgetBtn" class="text-btn">
-      Edit
-    </button>
-  </div>
+    <!-- MONTHLY BUDGET -->
+    <section class="card budget-card">
 
-  <div class="budget-top">
-    <div>
-      <span class="budget-label">Budget</span>
-      <strong id="budgetAmount">$0.00</strong>
-    </div>
+      <div class="section-header">
 
-    <div class="budget-remaining">
-      <span class="budget-label">Remaining</span>
-      <strong id="budgetRemaining">$0.00</strong>
-    </div>
-  </div>
+        <div>
 
-  <div class="budget-progress">
-    <div
-      id="budgetProgressBar"
-      class="budget-progress-bar">
-    </div>
-  </div>
+          <p class="section-small">
+            Spending Plan
+          </p>
 
-  <div class="budget-footer">
-    <span id="budgetSpentText">
-      $0.00 spent
-    </span>
+          <h2>
+            Monthly Budget
+          </h2>
 
-    <span id="budgetPercent">
-      0%
-    </span>
-  </div>
+        </div>
 
-</section>
+
+        <button
+          id="editBudgetBtn"
+          class="text-btn"
+          type="button">
+
+          Edit
+
+        </button>
+
+      </div>
+
+
+      <div class="budget-top">
+
+        <div>
+
+          <span class="budget-label">
+            Budget
+          </span>
+
+          <strong id="budgetAmount">
+            $0.00
+          </strong>
+
+        </div>
+
+
+        <div class="budget-remaining">
+
+          <span class="budget-label">
+            Remaining
+          </span>
+
+          <strong id="budgetRemaining">
+            $0.00
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <div class="budget-progress">
+
+        <div
+          id="budgetProgressBar"
+          class="budget-progress-bar">
+        </div>
+
+      </div>
+
+
+      <div class="budget-footer">
+
+        <span id="budgetSpentText">
+          $0.00 spent
+        </span>
+
+        <span id="budgetPercent">
+          0%
+        </span>
+
+      </div>
+
+    </section>
+
 
     <!-- TRANSACTION HISTORY -->
     <section class="card">
 
       <div class="section-header">
+
         <div>
-          <p class="section-small">Activity</p>
-          <h2>Recent Transactions</h2>
+
+          <p class="section-small">
+            Activity
+          </p>
+
+          <h2>
+            Recent Transactions
+          </h2>
+
         </div>
 
-        <button id="clearTransactionsBtn" class="text-btn">
+
+        <button
+          id="clearTransactionsBtn"
+          class="text-btn"
+          type="button">
+
           Clear
+
         </button>
 
       </div>
 
-      <div id="transactionList" class="transaction-list">
+
+      <!-- SEARCH -->
+      <div class="history-filters">
+
+        <input
+          type="search"
+          id="transactionSearch"
+          placeholder="Search transactions..."
+        />
+
+
+        <div class="filter-row">
+
+          <select id="typeFilter">
+
+            <option value="all">
+              All Transactions
+            </option>
+
+            <option value="expense">
+              Expenses
+            </option>
+
+            <option value="income">
+              Income
+            </option>
+
+          </select>
+
+
+          <input
+            type="month"
+            id="monthFilter"
+          />
+
+        </div>
+
+
+        <button
+          id="clearFiltersBtn"
+          class="clear-filters-btn"
+          type="button">
+
+          Clear Filters
+
+        </button>
+
+      </div>
+
+
+      <div
+        id="transactionList"
+        class="transaction-list">
 
         <div class="empty-state">
-          <div class="empty-icon">💳</div>
 
-          <h3>No transactions yet</h3>
+          <div class="empty-icon">
+            💳
+          </div>
+
+          <h3>
+            No transactions yet
+          </h3>
 
           <p>
             Add your first income or expense above.
           </p>
+
         </div>
 
       </div>
@@ -260,42 +457,72 @@
   </main>
 
 
-  <!-- CATEGORY MODAL -->
-  <div id="categoryModal" class="modal hidden">
+  <!-- SETTINGS MODAL -->
+  <div
+    id="categoryModal"
+    class="modal hidden">
 
-    <div class="modal-overlay" id="modalOverlay"></div>
+    <div
+      class="modal-overlay"
+      id="modalOverlay">
+    </div>
+
 
     <div class="modal-content">
 
       <div class="modal-header">
+
         <div>
-          <p class="section-small">Customize</p>
-          <h2>Manage Categories</h2>
+
+          <p class="section-small">
+            Customize
+          </p>
+
+          <h2>
+            Manage Categories
+          </h2>
+
         </div>
 
-        <button id="closeModalBtn" class="close-btn">
+
+        <button
+          id="closeModalBtn"
+          class="close-btn"
+          type="button">
+
           ×
+
         </button>
+
       </div>
 
 
+      <!-- CATEGORY TYPE -->
       <div class="category-type-selector">
 
         <button
           class="category-tab active"
-          data-category-type="expense">
+          data-category-type="expense"
+          type="button">
+
           Expenses
+
         </button>
+
 
         <button
           class="category-tab"
-          data-category-type="income">
+          data-category-type="income"
+          type="button">
+
           Income
+
         </button>
 
       </div>
 
 
+      <!-- ADD CATEGORY -->
       <form id="categoryForm">
 
         <div class="category-form-row">
@@ -308,6 +535,7 @@
             class="emoji-input"
           />
 
+
           <input
             type="text"
             id="categoryName"
@@ -316,8 +544,13 @@
             required
           />
 
-          <button type="submit" class="add-category-btn">
+
+          <button
+            type="submit"
+            class="add-category-btn">
+
             +
+
           </button>
 
         </div>
@@ -325,57 +558,82 @@
       </form>
 
 
-      <div id="categoryList" class="category-list">
+      <div
+        id="categoryList"
+        class="category-list">
       </div>
-<div class="budget-settings">
 
-  <h3>Monthly Budget</h3>
 
-  <p>
-    Set your monthly spending limit.
-  </p>
+      <!-- MONTHLY BUDGET SETTINGS -->
+      <div class="budget-settings">
 
-  <div class="budget-input-row">
+        <h3>
+          Monthly Budget
+        </h3>
 
-    <div class="budget-input-wrapper">
-      <span>$</span>
+        <p>
+          Set your monthly spending limit.
+        </p>
 
-      <input
-        type="number"
-        id="monthlyBudgetInput"
-        placeholder="1500"
-        min="0"
-        step="0.01"
-        inputmode="decimal"
-      />
-    </div>
 
-    <button
-      id="saveBudgetBtn"
-      type="button"
-      class="secondary-btn">
-      Save
-    </button>
+        <div class="budget-input-row">
 
-  </div>
+          <div class="budget-input-wrapper">
 
-</div>
+            <span>$</span>
 
+            <input
+              type="number"
+              id="monthlyBudgetInput"
+              placeholder="1500"
+              min="0"
+              step="0.01"
+              inputmode="decimal"
+            />
+
+          </div>
+
+
+          <button
+            id="saveBudgetBtn"
+            type="button"
+            class="secondary-btn">
+
+            Save
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- BACKUP -->
       <div class="backup-section">
 
-        <h3>Backup</h3>
+        <h3>
+          Backup
+        </h3>
 
         <p>
           Export your data so you have a copy outside this device.
         </p>
 
+
         <div class="backup-buttons">
 
-          <button id="exportBtn" class="secondary-btn">
+          <button
+            id="exportBtn"
+            class="secondary-btn"
+            type="button">
+
             Export Backup
+
           </button>
 
+
           <label class="secondary-btn upload-btn">
+
             Import Backup
 
             <input
@@ -384,6 +642,7 @@
               accept=".json"
               hidden
             />
+
           </label>
 
         </div>
