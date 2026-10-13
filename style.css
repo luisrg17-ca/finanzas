@@ -24,18 +24,10 @@ html {
 }
 
 body {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif;
-
+  min-height: 100vh;
   background: var(--bg);
   color: var(--text);
-  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   padding-bottom: env(safe-area-inset-bottom);
   -webkit-tap-highlight-color: transparent;
 }
@@ -43,7 +35,7 @@ body {
 button,
 input,
 select {
-  font: inherit;
+  font-family: inherit;
 }
 
 button {
@@ -53,38 +45,35 @@ button {
 /* HEADER */
 
 .topbar {
+  width: calc(100% - 28px);
   max-width: 680px;
   margin: 0 auto;
-  padding:
-    calc(20px + env(safe-area-inset-top))
-    18px
-    14px;
-
+  padding-top: 20px;
+  padding-bottom: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .welcome {
-  font-size: 13px;
-  color: var(--muted);
   margin-bottom: 2px;
+  color: var(--muted);
+  font-size: 13px;
 }
 
 .topbar h1 {
   font-size: 26px;
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: -0.5px;
 }
 
 .icon-btn {
   width: 42px;
   height: 42px;
-  border-radius: 14px;
   border: 1px solid var(--border);
-  background: white;
+  border-radius: 14px;
+  background: #ffffff;
   font-size: 20px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -93,12 +82,13 @@ button {
 /* MAIN */
 
 .container {
-  width: min(100%, 680px);
+  width: calc(100% - 20px);
+  max-width: 680px;
   margin: 0 auto;
-  padding: 0 14px 40px;
+  padding-bottom: 40px;
 }
 
-/* CARDS */
+/* GENERAL CARDS */
 
 .card,
 .balance-card,
@@ -114,24 +104,29 @@ button {
   margin-bottom: 14px;
 }
 
-/* NET BALANCE */
+.card {
+  padding: 18px;
+}
+
+/* BALANCE */
 
 .balance-card {
   padding: 22px;
   background: #171717;
-  color: white;
+  color: #ffffff;
 }
 
 .balance-label {
+  margin-bottom: 6px;
   font-size: 13px;
   opacity: 0.65;
-  margin-bottom: 6px;
 }
 
-.balance-card > h2 {
-  font-size: 36px;
-  letter-spacing: -1px;
+.balance-card h2 {
   margin-bottom: 20px;
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1px;
 }
 
 .summary-grid {
@@ -193,6 +188,7 @@ button {
 
 .account-card-header h2 {
   font-size: 18px;
+  font-weight: 700;
 }
 
 .account-icon {
@@ -218,6 +214,7 @@ button {
   display: block;
   margin-top: 5px;
   font-size: 24px;
+  font-weight: 700;
   letter-spacing: -0.5px;
 }
 
@@ -231,6 +228,7 @@ button {
   display: block;
   margin-top: 4px;
   font-size: 16px;
+  font-weight: 700;
 }
 
 .credit-debt {
@@ -258,7 +256,7 @@ button {
 }
 
 .credit-progress-bar {
-  width: 0%;
+  width: 0;
   height: 100%;
   background: var(--primary);
   border-radius: 999px;
@@ -269,11 +267,7 @@ button {
   margin-top: 6px;
 }
 
-/* STANDARD CARD */
-
-.card {
-  padding: 18px;
-}
+/* SECTION HEADERS */
 
 .section-header {
   display: flex;
@@ -284,73 +278,53 @@ button {
 }
 
 .section-small {
+  margin-bottom: 2px;
+  color: var(--muted);
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  color: var(--muted);
-  margin-bottom: 2px;
 }
 
 .section-header h2 {
   font-size: 19px;
+  font-weight: 700;
   letter-spacing: -0.3px;
 }
 
-/* TYPE SWITCHES */
+/* TRANSACTION TYPE */
 
 .type-switch {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 4px;
   padding: 4px;
+  margin-bottom: 16px;
   background: #f1f1f3;
   border-radius: 14px;
-  margin-bottom: 16px;
 }
 
 .type-switch.three-options {
   grid-template-columns: repeat(3, 1fr);
 }
 
-.type-btn,
-.payment-method-btn,
-.category-tab {
-  border: none;
-  background: transparent;
-  color: var(--muted);
-  font-weight: 700;
-}
-
 .type-btn {
   min-height: 42px;
   padding: 8px 6px;
+  border: 0;
   border-radius: 11px;
+  background: transparent;
+  color: var(--muted);
   font-size: 13px;
+  font-weight: 700;
 }
 
-.type-btn.active,
-.payment-method-btn.active,
-.category-tab.active {
-  background: white;
+.type-btn.active {
+  background: #ffffff;
   color: var(--text);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.payment-method-switch {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4px;
-  padding: 4px;
-  border-radius: 13px;
-  background: #f1f1f3;
-}
-
-.payment-method-btn {
-  min-height: 42px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-/* FORMS */
+/* AMOUNT */
 
 .amount-input-wrapper {
   display: flex;
@@ -360,27 +334,29 @@ button {
 }
 
 .amount-input-wrapper span {
+  margin-right: 4px;
   font-size: 25px;
   font-weight: 700;
-  margin-right: 4px;
 }
 
 .amount-input-wrapper input {
   width: 170px;
-  border: none;
-  outline: none;
-  font-size: 38px;
-  font-weight: 750;
-  text-align: left;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
   background: transparent;
   color: var(--text);
-  padding: 0;
-  min-height: unset;
+  font-size: 38px;
+  font-weight: 700;
+  text-align: left;
 }
 
 .amount-input-wrapper input::placeholder {
   color: #c7c7cc;
 }
+
+/* FORMS */
 
 .form-group {
   margin-bottom: 13px;
@@ -391,7 +367,7 @@ button {
   margin-bottom: 6px;
   color: var(--muted);
   font-size: 12px;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 input,
@@ -401,30 +377,57 @@ select {
   padding: 0 13px;
   border: 1px solid var(--border);
   border-radius: 13px;
+  outline: 0;
   background: #fafafa;
   color: var(--text);
   font-size: 16px;
-  outline: none;
 }
 
 input:focus,
 select:focus {
   border-color: #a1a1a6;
-  background: white;
+  background: #ffffff;
 }
 
 input::placeholder {
   color: #aaaab0;
 }
 
+/* PAYMENT METHOD */
+
+.payment-method-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  padding: 4px;
+  background: #f1f1f3;
+  border-radius: 13px;
+}
+
+.payment-method-btn {
+  min-height: 42px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.payment-method-btn.active {
+  background: #ffffff;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
 .payment-info {
   display: flex;
-  gap: 11px;
   align-items: flex-start;
+  gap: 11px;
   padding: 13px;
+  margin-bottom: 13px;
   border-radius: 13px;
   background: #f7f7f8;
-  margin-bottom: 13px;
 }
 
 .payment-info-icon {
@@ -452,23 +455,22 @@ input::placeholder {
   width: 100%;
   min-height: 49px;
   margin-top: 4px;
-  border: none;
+  border: 0;
   border-radius: 14px;
   background: var(--primary);
-  color: white;
+  color: #ffffff;
   font-size: 15px;
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .secondary-btn {
   min-height: 42px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: white;
+  background: #ffffff;
   color: var(--text);
   font-size: 12px;
   font-weight: 700;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -479,28 +481,18 @@ input::placeholder {
 }
 
 .text-btn {
-  border: none;
+  border: 0;
   background: transparent;
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
 }
 
-.primary-btn:active,
-.secondary-btn:active,
-.icon-btn:active,
-.type-btn:active,
-.payment-method-btn:active,
-.category-tab:active,
-.add-category-btn:active {
-  transform: scale(0.98);
-}
-
 /* MONTH SUMMARY */
 
 #monthLabel {
-  font-size: 12px;
   color: var(--muted);
+  font-size: 12px;
 }
 
 .month-stats {
@@ -524,9 +516,10 @@ input::placeholder {
 
 .month-stats strong {
   font-size: 14px;
+  font-weight: 700;
 }
 
-/* BUDGET */
+/* MONTHLY BUDGET */
 
 .budget-top {
   display: flex;
@@ -547,14 +540,14 @@ input::placeholder {
 }
 
 .budget-label {
-  font-size: 11px;
   color: var(--muted);
+  font-size: 11px;
 }
 
 #budgetAmount,
 #budgetRemaining {
   font-size: 18px;
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .budget-progress {
@@ -566,7 +559,7 @@ input::placeholder {
 }
 
 .budget-progress-bar {
-  width: 0%;
+  width: 0;
   height: 100%;
   background: var(--primary);
   border-radius: 999px;
@@ -580,6 +573,87 @@ input::placeholder {
   margin-top: 8px;
   color: var(--muted);
   font-size: 11px;
+}
+
+/* MONTH COMPARISON */
+
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.comparison-box {
+  padding: 13px;
+  border-radius: 13px;
+  background: #f7f7f8;
+}
+
+.comparison-box span {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.comparison-box strong {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.comparison-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 13px;
+  border-radius: 13px;
+  background: #f7f7f8;
+}
+
+.comparison-result-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.comparison-result strong {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.comparison-percent-wrap {
+  min-width: 62px;
+  padding: 7px 9px;
+  border-radius: 999px;
+  background: #eeeeef;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.comparison-result.better strong,
+.comparison-result.better .comparison-percent-wrap {
+  color: var(--income);
+}
+
+.comparison-result.worse strong,
+.comparison-result.worse .comparison-percent-wrap {
+  color: var(--expense);
+}
+
+.comparison-result.neutral strong,
+.comparison-result.neutral .comparison-percent-wrap {
+  color: var(--text);
+}
+
+.comparison-message {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
 }
 
 /* FILTERS */
@@ -610,15 +684,15 @@ input::placeholder {
 
 .clear-filters-btn {
   width: 100%;
-  border: none;
+  padding: 5px;
+  border: 0;
   background: transparent;
   color: var(--muted);
   font-size: 11px;
   font-weight: 600;
-  padding: 5px;
 }
 
-/* TRANSACTIONS */
+/* TRANSACTION LIST */
 
 .transaction-list {
   display: flex;
@@ -634,7 +708,7 @@ input::placeholder {
 }
 
 .transaction-item:last-child {
-  border-bottom: none;
+  border-bottom: 0;
 }
 
 .transaction-icon {
@@ -643,7 +717,6 @@ input::placeholder {
   border-radius: 13px;
   background: #f4f4f5;
   font-size: 19px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -656,10 +729,10 @@ input::placeholder {
 }
 
 .transaction-info h3 {
+  overflow: hidden;
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -683,7 +756,7 @@ input::placeholder {
 
 .transaction-amount {
   font-size: 13px;
-  font-weight: 750;
+  font-weight: 700;
   white-space: nowrap;
 }
 
@@ -708,35 +781,30 @@ input::placeholder {
 .small-action-btn {
   width: 28px;
   height: 28px;
-  border: none;
+  border: 0;
   border-radius: 8px;
   background: transparent;
   font-size: 13px;
-
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.small-action-btn:active {
-  background: #f1f1f3;
-}
-
 /* EMPTY STATE */
 
 .empty-state {
-  text-align: center;
   padding: 28px 12px 22px;
+  text-align: center;
 }
 
 .empty-icon {
-  font-size: 32px;
   margin-bottom: 8px;
+  font-size: 32px;
 }
 
 .empty-state h3 {
-  font-size: 15px;
   margin-bottom: 4px;
+  font-size: 15px;
 }
 
 .empty-state p {
@@ -759,20 +827,18 @@ input::placeholder {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.42);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
 }
 
 .modal-content {
   position: relative;
   z-index: 2;
-  width: min(100%, 680px);
+  width: 100%;
+  max-width: 680px;
   max-height: 88vh;
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  background: white;
+  background: #ffffff;
   border-radius: 24px 24px 0 0;
-  padding: 20px 18px calc(24px + env(safe-area-inset-bottom));
+  padding: 20px 18px 24px;
 }
 
 .modal-header {
@@ -789,11 +855,10 @@ input::placeholder {
 .close-btn {
   width: 36px;
   height: 36px;
-  border: none;
+  border: 0;
   border-radius: 50%;
   background: #f2f2f4;
   font-size: 24px;
-
   display: flex;
   align-items: center;
   justify-content: center;
@@ -807,7 +872,7 @@ input::placeholder {
 }
 
 .settings-section:first-of-type {
-  border-top: none;
+  border-top: 0;
 }
 
 .settings-section h3 {
@@ -840,18 +905,11 @@ input::placeholder {
 }
 
 .money-input-wrapper input {
-  border: none;
+  border: 0;
   border-radius: 0;
   background: transparent;
   padding-left: 6px;
 }
-
-.money-input-wrapper:focus-within {
-  border-color: #a1a1a6;
-  background: white;
-}
-
-/* CATEGORY MANAGEMENT */
 
 .category-type-selector {
   display: grid;
@@ -865,7 +923,17 @@ input::placeholder {
 
 .category-tab {
   min-height: 40px;
+  border: 0;
   border-radius: 10px;
+  background: transparent;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.category-tab.active {
+  background: #ffffff;
+  color: var(--text);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .category-form-row {
@@ -876,15 +944,15 @@ input::placeholder {
 }
 
 .emoji-input {
-  text-align: center;
   padding: 0;
+  text-align: center;
 }
 
 .add-category-btn {
-  border: none;
+  border: 0;
   border-radius: 13px;
   background: var(--primary);
-  color: white;
+  color: #ffffff;
   font-size: 23px;
   font-weight: 600;
 }
@@ -915,28 +983,50 @@ input::placeholder {
 }
 
 .delete-category-btn {
-  border: none;
+  padding: 7px 10px;
+  border: 0;
   border-radius: 10px;
   background: var(--expense-bg);
   color: var(--expense);
-  padding: 7px 10px;
   font-size: 11px;
   font-weight: 600;
 }
 
-.budget-input-row,
-.backup-buttons {
+.budget-input-row {
   display: grid;
   grid-template-columns: 1fr 90px;
   gap: 8px;
 }
 
 .backup-buttons {
+  display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
 .upload-btn {
   text-align: center;
+}
+
+/* DANGER ZONE */
+
+.danger-zone {
+  border-top-color: #f1c5c1;
+}
+
+.danger-zone h3 {
+  color: var(--expense);
+}
+
+.danger-btn {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #f0c2bd;
+  border-radius: 12px;
+  background: var(--expense-bg);
+  color: var(--expense);
+  font-size: 13px;
+  font-weight: 700;
 }
 
 /* MOBILE */
@@ -949,20 +1039,18 @@ input::placeholder {
 
 @media (max-width: 480px) {
   .topbar {
-    padding-left: 14px;
-    padding-right: 14px;
+    width: calc(100% - 28px);
   }
 
   .container {
-    padding-left: 10px;
-    padding-right: 10px;
+    width: calc(100% - 20px);
   }
 
   .balance-card {
     padding: 19px;
   }
 
-  .balance-card > h2 {
+  .balance-card h2 {
     font-size: 32px;
   }
 
@@ -1032,7 +1120,8 @@ input::placeholder {
   .month-stats,
   .filter-row,
   .budget-input-row,
-  .backup-buttons {
+  .backup-buttons,
+  .comparison-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1051,115 +1140,4 @@ input[type="number"]::-webkit-outer-spin-button {
 
 input[type="number"] {
   -moz-appearance: textfield;
-}
-
-
-/* MONTH COMPARISON */
-
-.comparison-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 10px;
-}
-
-.comparison-box {
-  padding: 13px;
-  border-radius: 13px;
-  background: #f7f7f8;
-}
-
-.comparison-box span {
-  display: block;
-  margin-bottom: 5px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.comparison-box strong {
-  font-size: 17px;
-}
-
-.comparison-result {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 13px;
-  border-radius: 13px;
-  background: #f7f7f8;
-}
-
-.comparison-result-label {
-  display: block;
-  margin-bottom: 4px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.comparison-result strong {
-  font-size: 17px;
-}
-
-.comparison-percent-wrap {
-  min-width: 62px;
-  padding: 7px 9px;
-  border-radius: 999px;
-  background: #eeeeef;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 750;
-}
-
-.comparison-result.better strong,
-.comparison-result.better .comparison-percent-wrap {
-  color: var(--income);
-}
-
-.comparison-result.worse strong,
-.comparison-result.worse .comparison-percent-wrap {
-  color: var(--expense);
-}
-
-.comparison-result.neutral strong,
-.comparison-result.neutral .comparison-percent-wrap {
-  color: var(--text);
-}
-
-.comparison-message {
-  margin-top: 9px;
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.45;
-}
-
-/* DANGER ZONE */
-
-.danger-zone {
-  border-top-color: #f1c5c1;
-}
-
-.danger-zone h3 {
-  color: var(--expense);
-}
-
-.danger-btn {
-  width: 100%;
-  min-height: 44px;
-  border: 1px solid #f0c2bd;
-  border-radius: 12px;
-  background: var(--expense-bg);
-  color: var(--expense);
-  font-size: 13px;
-  font-weight: 750;
-}
-
-.danger-btn:active {
-  transform: scale(0.98);
-}
-
-@media (max-width: 370px) {
-  .comparison-grid {
-    grid-template-columns: 1fr;
-  }
 }
