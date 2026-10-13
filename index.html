@@ -9,514 +9,129 @@
 </head>
 <body>
   <header class="topbar">
-    <div>
-      <p class="welcome">Personal Finance</p>
-      <h1>My Money</h1>
-    </div>
-
-    <button id="settingsBtn" class="icon-btn" type="button" aria-label="Settings">
-      ⚙️
-    </button>
+    <div><p class="welcome">Personal Finance</p><h1>My Money</h1></div>
+    <button id="settingsBtn" class="icon-btn" type="button" aria-label="Settings">⚙️</button>
   </header>
 
   <main class="container">
-    <!-- NET BALANCE -->
     <section class="balance-card">
       <p class="balance-label">Net Balance</p>
       <h2 id="netBalanceAmount">$0.00</h2>
-
       <div class="summary-grid">
-        <div class="summary-item">
-          <span class="summary-icon">🏦</span>
-          <div>
-            <p>Debit Balance</p>
-            <strong id="debitBalanceAmount">$0.00</strong>
-          </div>
-        </div>
-
-        <div class="summary-item">
-          <span class="summary-icon">💳</span>
-          <div>
-            <p>Credit Owed</p>
-            <strong id="creditOwedAmount">$0.00</strong>
-          </div>
-        </div>
+        <div class="summary-item"><span class="summary-icon">🏦</span><div><p>Total Debit</p><strong id="totalDebitAmount">$0.00</strong></div></div>
+        <div class="summary-item"><span class="summary-icon">💳</span><div><p>Total Credit Owed</p><strong id="totalCreditOwedAmount">$0.00</strong></div></div>
       </div>
     </section>
 
-    <!-- ACCOUNTS -->
-    <section class="accounts-grid">
-      <article class="account-card">
-        <div class="account-card-header">
-          <div>
-            <p class="section-small">Bank Account</p>
-            <h2>Debit</h2>
-          </div>
-          <span class="account-icon">🏦</span>
-        </div>
-
-        <div class="account-main-value">
-          <span>Available</span>
-          <strong id="debitAvailable">$0.00</strong>
-        </div>
-      </article>
-
-      <article class="account-card">
-        <div class="account-card-header">
-          <div>
-            <p class="section-small">Credit Card</p>
-            <h2>Credit</h2>
-          </div>
-          <span class="account-icon">💳</span>
-        </div>
-
-        <div class="credit-account-grid">
-          <div>
-            <span>Owed</span>
-            <strong id="creditCardOwed" class="credit-debt">$0.00</strong>
-          </div>
-
-          <div>
-            <span>Available</span>
-            <strong id="creditAvailable">$0.00</strong>
-          </div>
-        </div>
-
-        <div class="credit-limit-row">
-          <span>Credit Limit</span>
-          <span id="creditLimitDisplay">$0.00</span>
-        </div>
-
-        <div class="credit-progress">
-          <div id="creditProgressBar" class="credit-progress-bar"></div>
-        </div>
-
-        <div class="credit-progress-footer">
-          <span id="creditUsedText">$0.00 used</span>
-          <span id="creditUsedPercent">0%</span>
-        </div>
-      </article>
-    </section>
-
-    <!-- QUICK ADD -->
     <section class="card">
-      <div class="section-header">
-        <div>
-          <p class="section-small">New Transaction</p>
-          <h2>Quick Add</h2>
-        </div>
+      <div class="section-header"><div><p class="section-small">Accounts</p><h2>My Accounts</h2></div></div>
+      <div class="accounts-group">
+        <div class="accounts-group-header"><span>Debit</span><strong id="debitAccountsTotal">$0.00</strong></div>
+        <div id="debitAccountsList" class="accounts-list"></div>
       </div>
+      <div class="accounts-divider"></div>
+      <div class="accounts-group">
+        <div class="accounts-group-header"><span>Credit</span><strong id="creditAccountsTotal">$0.00 owed</strong></div>
+        <div id="creditAccountsList" class="accounts-list"></div>
+      </div>
+    </section>
 
+    <section class="card">
+      <div class="section-header"><div><p class="section-small">New Transaction</p><h2>Quick Add</h2></div></div>
       <div class="type-switch three-options">
-        <button class="type-btn active" id="expenseTypeBtn" data-type="expense" type="button">
-          Expense
-        </button>
-
-        <button class="type-btn" id="incomeTypeBtn" data-type="income" type="button">
-          Income
-        </button>
-
-        <button class="type-btn" id="paymentTypeBtn" data-type="payment" type="button">
-          Card Payment
-        </button>
+        <button class="type-btn active" id="expenseTypeBtn" data-type="expense" type="button">Expense</button>
+        <button class="type-btn" id="incomeTypeBtn" data-type="income" type="button">Income</button>
+        <button class="type-btn" id="paymentTypeBtn" data-type="payment" type="button">Card Payment</button>
       </div>
 
       <form id="transactionForm">
-        <div class="amount-input-wrapper">
-          <span>$</span>
-          <input
-            type="number"
-            id="amount"
-            placeholder="0.00"
-            inputmode="decimal"
-            step="0.01"
-            min="0.01"
-            required
-          />
+        <div class="amount-input-wrapper"><span>$</span><input type="number" id="amount" placeholder="0.00" inputmode="decimal" step="0.01" min="0.01" required /></div>
+
+        <div id="expenseAccountGroup" class="form-group"><label for="expenseAccountSelect">Paid With</label><select id="expenseAccountSelect"></select></div>
+        <div id="incomeAccountGroup" class="form-group hidden"><label for="incomeAccountSelect">Deposit To</label><select id="incomeAccountSelect"></select></div>
+
+        <div id="paymentAccountsGroup" class="hidden">
+          <div class="form-group"><label for="paymentSourceSelect">From Debit Account</label><select id="paymentSourceSelect"></select></div>
+          <div class="form-group"><label for="paymentDestinationSelect">To Credit Account</label><select id="paymentDestinationSelect"></select></div>
+          <div class="payment-info"><div class="payment-info-icon">↔️</div><div><strong>Credit Card Payment</strong><p>This reduces your selected debit balance and the debt on the selected credit account.</p></div></div>
         </div>
 
-        <div id="paymentMethodGroup" class="form-group">
-          <label>Payment Method</label>
-
-          <div class="payment-method-switch">
-            <button
-              id="debitMethodBtn"
-              class="payment-method-btn active"
-              type="button"
-              data-method="debit"
-            >
-              🏦 Debit
-            </button>
-
-            <button
-              id="creditMethodBtn"
-              class="payment-method-btn"
-              type="button"
-              data-method="credit"
-            >
-              💳 Credit
-            </button>
-          </div>
-        </div>
-
-        <div id="cardPaymentInfo" class="payment-info hidden">
-          <div class="payment-info-icon">↔️</div>
-          <div>
-            <strong>Credit Card Payment</strong>
-            <p>This reduces both your debit balance and your credit card debt.</p>
-          </div>
-        </div>
-
-        <div id="categoryGroup" class="form-group">
-          <label for="category">Category</label>
-          <select id="category" required></select>
-        </div>
-
-        <div class="form-group">
-          <label for="description">Description</label>
-          <input
-            type="text"
-            id="description"
-            placeholder="What was this for?"
-            maxlength="60"
-          />
-        </div>
-
-        <div class="form-group">
-          <label for="date">Date</label>
-          <input type="date" id="date" required />
-        </div>
-
-        <button id="submitTransactionBtn" class="primary-btn" type="submit">
-          + Add Transaction
-        </button>
+        <div id="categoryGroup" class="form-group"><label for="category">Category</label><select id="category" required></select></div>
+        <div class="form-group"><label for="description">Description</label><input type="text" id="description" placeholder="What was this for?" maxlength="60" /></div>
+        <div class="form-group"><label for="date">Date</label><input type="date" id="date" required /></div>
+        <button id="submitTransactionBtn" class="primary-btn" type="submit">+ Add Transaction</button>
       </form>
     </section>
 
-    <!-- MONTH SUMMARY -->
     <section class="card">
-      <div class="section-header">
-        <div>
-          <p class="section-small">Overview</p>
-          <h2>This Month</h2>
-        </div>
-
-        <span id="monthLabel"></span>
-      </div>
-
+      <div class="section-header"><div><p class="section-small">Overview</p><h2>This Month</h2></div><span id="monthLabel"></span></div>
       <div class="month-stats">
-        <div>
-          <span>Income</span>
-          <strong id="monthIncome">$0.00</strong>
-        </div>
-
-        <div>
-          <span>Expenses</span>
-          <strong id="monthExpenses">$0.00</strong>
-        </div>
-
-        <div>
-          <span>Balance</span>
-          <strong id="monthBalance">$0.00</strong>
-        </div>
+        <div><span>Income</span><strong id="monthIncome">$0.00</strong></div>
+        <div><span>Expenses</span><strong id="monthExpenses">$0.00</strong></div>
+        <div><span>Balance</span><strong id="monthBalance">$0.00</strong></div>
       </div>
     </section>
 
-    <!-- MONTHLY BUDGET -->
     <section class="card budget-card">
-      <div class="section-header">
-        <div>
-          <p class="section-small">Spending Plan</p>
-          <h2>Monthly Budget</h2>
-        </div>
-
-        <button id="editBudgetBtn" class="text-btn" type="button">Edit</button>
-      </div>
-
-      <div class="budget-top">
-        <div>
-          <span class="budget-label">Budget</span>
-          <strong id="budgetAmount">$0.00</strong>
-        </div>
-
-        <div class="budget-remaining">
-          <span class="budget-label">Remaining</span>
-          <strong id="budgetRemaining">$0.00</strong>
-        </div>
-      </div>
-
-      <div class="budget-progress">
-        <div id="budgetProgressBar" class="budget-progress-bar"></div>
-      </div>
-
-      <div class="budget-footer">
-        <span id="budgetSpentText">$0.00 spent</span>
-        <span id="budgetPercent">0%</span>
-      </div>
+      <div class="section-header"><div><p class="section-small">Spending Plan</p><h2>Monthly Budget</h2></div><button id="editBudgetBtn" class="text-btn" type="button">Edit</button></div>
+      <div class="budget-top"><div><span class="budget-label">Budget</span><strong id="budgetAmount">$0.00</strong></div><div class="budget-remaining"><span class="budget-label">Remaining</span><strong id="budgetRemaining">$0.00</strong></div></div>
+      <div class="budget-progress"><div id="budgetProgressBar" class="budget-progress-bar"></div></div>
+      <div class="budget-footer"><span id="budgetSpentText">$0.00 spent</span><span id="budgetPercent">0%</span></div>
     </section>
 
-
-    <!-- MONTH COMPARISON -->
     <section class="card comparison-card">
-      <div class="section-header">
-        <div>
-          <p class="section-small">Spending Comparison</p>
-          <h2>This Month vs Last Month</h2>
-        </div>
-      </div>
-
-      <div class="comparison-grid">
-        <div class="comparison-box">
-          <span id="lastMonthLabel">Last Month</span>
-          <strong id="lastMonthSpent">$0.00</strong>
-        </div>
-
-        <div class="comparison-box">
-          <span id="currentMonthLabel">This Month</span>
-          <strong id="currentMonthSpent">$0.00</strong>
-        </div>
-      </div>
-
-      <div id="comparisonResult" class="comparison-result neutral">
-        <div>
-          <span class="comparison-result-label">Difference</span>
-          <strong id="monthDifference">$0.00</strong>
-        </div>
-
-        <div class="comparison-percent-wrap">
-          <span id="monthDifferencePercent">0%</span>
-        </div>
-      </div>
-
-      <p id="comparisonMessage" class="comparison-message">
-        Add expenses to compare your monthly spending.
-      </p>
+      <div class="section-header"><div><p class="section-small">Spending Comparison</p><h2>This Month vs Last Month</h2></div></div>
+      <div class="comparison-grid"><div class="comparison-box"><span id="lastMonthLabel">Last Month</span><strong id="lastMonthSpent">$0.00</strong></div><div class="comparison-box"><span id="currentMonthLabel">This Month</span><strong id="currentMonthSpent">$0.00</strong></div></div>
+      <div id="comparisonResult" class="comparison-result neutral"><div><span class="comparison-result-label">Difference</span><strong id="monthDifference">$0.00</strong></div><div class="comparison-percent-wrap"><span id="monthDifferencePercent">0%</span></div></div>
+      <p id="comparisonMessage" class="comparison-message">Add expenses to compare your monthly spending.</p>
     </section>
 
-    <!-- TRANSACTIONS -->
     <section class="card">
-      <div class="section-header">
-        <div>
-          <p class="section-small">Activity</p>
-          <h2>Transactions</h2>
-        </div>
-
-        <button id="clearTransactionsBtn" class="text-btn" type="button">Clear</button>
-      </div>
-
+      <div class="section-header"><div><p class="section-small">Activity</p><h2>Transactions</h2></div><button id="clearTransactionsBtn" class="text-btn" type="button">Clear</button></div>
       <div class="history-filters">
-        <input
-          type="search"
-          id="transactionSearch"
-          placeholder="Search transactions..."
-        />
-
-        <div class="filter-row">
-          <select id="typeFilter">
-            <option value="all">All Types</option>
-            <option value="expense">Expenses</option>
-            <option value="income">Income</option>
-            <option value="payment">Card Payments</option>
-          </select>
-
-          <input type="month" id="monthFilter" />
-        </div>
-
-        <select id="paymentMethodFilter">
-          <option value="all">All Payment Methods</option>
-          <option value="debit">Debit</option>
-          <option value="credit">Credit</option>
-        </select>
-
-        <button id="clearFiltersBtn" class="clear-filters-btn" type="button">
-          Clear Filters
-        </button>
+        <input type="search" id="transactionSearch" placeholder="Search transactions..." />
+        <div class="filter-row"><select id="typeFilter"><option value="all">All Types</option><option value="expense">Expenses</option><option value="income">Income</option><option value="payment">Card Payments</option></select><input type="month" id="monthFilter" /></div>
+        <select id="accountFilter"><option value="all">All Accounts</option></select>
+        <button id="clearFiltersBtn" class="clear-filters-btn" type="button">Clear Filters</button>
       </div>
-
-      <div id="transactionList" class="transaction-list">
-        <div class="empty-state">
-          <div class="empty-icon">💳</div>
-          <h3>No transactions yet</h3>
-          <p>Add your first transaction above.</p>
-        </div>
-      </div>
+      <div id="transactionList" class="transaction-list"></div>
     </section>
   </main>
 
-  <!-- SETTINGS -->
-  <div id="categoryModal" class="modal hidden">
+  <div id="settingsModal" class="modal hidden">
     <div class="modal-overlay" id="modalOverlay"></div>
-
     <div class="modal-content">
-      <div class="modal-header">
-        <div>
-          <p class="section-small">Settings</p>
-          <h2>My Money</h2>
-        </div>
-
-        <button id="closeModalBtn" class="close-btn" type="button">×</button>
-      </div>
+      <div class="modal-header"><div><p class="section-small">Settings</p><h2>My Money</h2></div><button id="closeModalBtn" class="close-btn" type="button">×</button></div>
 
       <section class="settings-section">
-        <h3>Accounts</h3>
-        <p class="settings-description">
-          Enter the balances you had before the transactions saved in this app.
-        </p>
-
-        <div class="form-group">
-          <label for="debitStartingBalanceInput">Debit Starting Balance</label>
-
-          <div class="money-input-wrapper">
-            <span>$</span>
-            <input
-              type="number"
-              id="debitStartingBalanceInput"
-              placeholder="0.00"
-              step="0.01"
-              inputmode="decimal"
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="creditStartingBalanceInput">Starting Credit Card Debt</label>
-
-          <div class="money-input-wrapper">
-            <span>$</span>
-            <input
-              type="number"
-              id="creditStartingBalanceInput"
-              placeholder="0.00"
-              min="0"
-              step="0.01"
-              inputmode="decimal"
-            />
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="creditLimitInput">Credit Limit</label>
-
-          <div class="money-input-wrapper">
-            <span>$</span>
-            <input
-              type="number"
-              id="creditLimitInput"
-              placeholder="0.00"
-              min="0"
-              step="0.01"
-              inputmode="decimal"
-            />
-          </div>
-        </div>
-
-        <button id="saveAccountsBtn" class="secondary-btn full-width-btn" type="button">
-          Save Account Balances
-        </button>
+        <h3>Manage Accounts</h3>
+        <p class="settings-description">Account names and balances are stored only in this browser's local storage.</p>
+        <div id="accountsSettingsList" class="account-settings-list"></div>
       </section>
 
       <section class="settings-section">
         <h3>Manage Categories</h3>
-
-        <div class="category-type-selector">
-          <button
-            class="category-tab active"
-            data-category-type="expense"
-            type="button"
-          >
-            Expenses
-          </button>
-
-          <button
-            class="category-tab"
-            data-category-type="income"
-            type="button"
-          >
-            Income
-          </button>
-        </div>
-
-        <form id="categoryForm">
-          <div class="category-form-row">
-            <input
-              type="text"
-              id="categoryEmoji"
-              placeholder="🍔"
-              maxlength="4"
-              class="emoji-input"
-            />
-
-            <input
-              type="text"
-              id="categoryName"
-              placeholder="Category name"
-              maxlength="30"
-              required
-            />
-
-            <button type="submit" class="add-category-btn">+</button>
-          </div>
-        </form>
-
+        <div class="category-type-selector"><button class="category-tab active" data-category-type="expense" type="button">Expenses</button><button class="category-tab" data-category-type="income" type="button">Income</button></div>
+        <form id="categoryForm"><div class="category-form-row"><input type="text" id="categoryEmoji" placeholder="🍔" maxlength="4" class="emoji-input" /><input type="text" id="categoryName" placeholder="Category name" maxlength="30" required /><button type="submit" class="add-category-btn">+</button></div></form>
         <div id="categoryList" class="category-list"></div>
       </section>
 
       <section class="settings-section">
         <h3>Monthly Budget</h3>
-
-        <p class="settings-description">
-          Debit and credit purchases both count toward your monthly spending.
-        </p>
-
-        <div class="budget-input-row">
-          <div class="money-input-wrapper">
-            <span>$</span>
-            <input
-              type="number"
-              id="monthlyBudgetInput"
-              placeholder="1500"
-              min="0"
-              step="0.01"
-              inputmode="decimal"
-            />
-          </div>
-
-          <button id="saveBudgetBtn" class="secondary-btn" type="button">
-            Save
-          </button>
-        </div>
-      </section>
-
-
-      <section class="settings-section danger-zone">
-        <h3>Reset All Data</h3>
-
-        <p class="settings-description">
-          Delete all transactions, categories, budget, and account balances stored on this device.
-        </p>
-
-        <button id="resetAllDataBtn" class="danger-btn" type="button">
-          Delete All Data
-        </button>
+        <p class="settings-description">Purchases made with debit and credit both count toward your monthly spending.</p>
+        <div class="budget-input-row"><div class="money-input-wrapper"><span>$</span><input type="number" id="monthlyBudgetInput" placeholder="1500" min="0" step="0.01" inputmode="decimal" /></div><button id="saveBudgetBtn" class="secondary-btn" type="button">Save</button></div>
       </section>
 
       <section class="settings-section">
         <h3>Backup</h3>
+        <p class="settings-description">Export a backup regularly because your financial information is stored locally on this device.</p>
+        <div class="backup-buttons"><button id="exportBtn" class="secondary-btn" type="button">Export Backup</button><label class="secondary-btn upload-btn">Import Backup<input type="file" id="importInput" accept=".json" hidden /></label></div>
+      </section>
 
-        <p class="settings-description">
-          Export a backup regularly because your financial information is stored locally on this device.
-        </p>
-
-        <div class="backup-buttons">
-          <button id="exportBtn" class="secondary-btn" type="button">
-            Export Backup
-          </button>
-
-          <label class="secondary-btn upload-btn">
-            Import Backup
-            <input type="file" id="importInput" accept=".json" hidden />
-          </label>
-        </div>
+      <section class="settings-section danger-zone">
+        <h3>Reset All Data</h3>
+        <p class="settings-description">Delete all transactions, account names, balances, categories, and budget stored on this device.</p>
+        <button id="resetAllDataBtn" class="danger-btn" type="button">Delete All Data</button>
       </section>
     </div>
   </div>
